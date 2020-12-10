@@ -7,6 +7,8 @@ let ROWS = HEIGHT/RES
 let going = false
 let VIRUS_COLOR = [100,255,255]
 
+//EDIT!!! If this works I am going to bed.
+
 //Create a canvas where I will display the pen tool (will not update cells with color from pen tool, it will be overlayed)
 class Canvas {
   constructor() {
