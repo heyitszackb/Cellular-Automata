@@ -6,8 +6,21 @@ let COLS = WIDTH/RES
 let ROWS = HEIGHT/RES
 let going = false
 let VIRUS_COLOR = [100,255,255] //Color of the virus
-let SMOOTH_CELLS = true // Setting this to false will improve framerate performance
+let SMOOTH_CELLS = false // Setting this to false will improve framerate performance
 
+function setup() {  
+     
+  // Create Canvas of given size  
+  myCanvas = createCanvas(WIDTH, HEIGHT);
+  voidCounter = createElement("h1","Number of void cells:")
+  virusCounter = createElement("h1","Number of virus cells:")
+  background(0,0,0);
+  cb1 = initRandomBoard()
+  cb2 = initBlankBoard()
+  c = new Canvas()
+  c.createBlankCanvas()
+  p = new Pen(cb1.cells,c.pixels,[100,255,100,75],10,"create-void")
+}
 //Create a canvas where I will display the pen tool (will not update cells with color from pen tool, it will be overlayed)
 class Canvas {
   constructor() {
@@ -117,19 +130,6 @@ class Pixel {
   }
 }
 
-function setup() {  
-     
-    // Create Canvas of given size  
-    createP("Cellular Automata!")
-    createCanvas(WIDTH, HEIGHT);
-    background(0,0,0);
-    cb1 = initRandomBoard()
-    cb2 = initBlankBoard()
-    c = new Canvas()
-    c.createBlankCanvas()
-    p = new Pen(cb1.cells,c.pixels,[100,255,100,75],10,"create-void")
-}
-
 //Initialize Random Board State
 function initRandomBoard() {
   let cb = new CellBoard()
@@ -215,10 +215,11 @@ function draw() {
      background(0)
      //Show the cells
      cb1.showCells()
+     showCounter()
      //show the canvas screen over the cells (the pen tool)
      p.show()
      //Update the cells
-     p.updateCells() 
+     p.updateCells()
      //c.show()
   //If the variable "going" is true, do the update calculations.
   if (going) {
@@ -227,6 +228,13 @@ function draw() {
   }
 }
 
+//Handles displaying the count of the virus and void cells
+function showCounter() {
+    cb1.updateStateCount()
+     //Update HTML element that displays the number of virus cells and the number of void cells
+    voidCounter.html("Void cells: " + cb1.stateCount[0])
+    virusCounter.html("Virus cells: " + cb1.stateCount[1])
+}
 function keyPressed() {
   //key code is space
   if (keyCode === 32) {

@@ -1,6 +1,23 @@
 class CellBoard {
     constructor() {
       this.cells = []
+      this.states = ["virus","void"]
+      this.stateCount = []
+    }
+    updateStateCount() {
+        this.stateCount = []
+        for (let h = 0; h < this.states.length;h++) {
+            let count = 0
+            for (let i = 0;i < ROWS;i++) {
+                for (let j = 0;j < COLS;j++) {
+                    if (this.cells[i][j].state == this.states[h]) {
+                        //console.log(this.states[i])
+                        count += 1
+                    }
+                }
+            }
+            this.stateCount.push(count)
+        }
     }
     //display all the cells in this.cells
     showCells() {
@@ -31,76 +48,75 @@ class CellBoard {
             //****Remeber the the computer in this program counts cells from bottom to top, left to right!****
             
             //Create a variable holding all the states that a cell could be
-            let states = ["virus","void"]
             
             //Loop through all the states and display the cells based on the states/
             //This code ensures that only the same states code will "Connect" with itself visually.
             if (SMOOTH_CELLS == true) {
-                for (let k = 0;k < states.length;k++) {
-                if (hoodCells[1] == states[k] &&
-                        hoodCells[4] == states[k] &&
-                        hoodCells[7] == states[k]) {
+                for (let k = 0;k < this.states.length;k++) {
+                if (hoodCells[1] == this.states[k] &&
+                        hoodCells[4] == this.states[k] &&
+                        hoodCells[7] == this.states[k]) {
                         this.cells[i][j].show("left-right")
                         break
-                } else if (hoodCells[3] == states[k] &&
-                        hoodCells[4] == states[k] &&
-                        hoodCells[5] == states[k]) {
+                } else if (hoodCells[3] == this.states[k] &&
+                        hoodCells[4] == this.states[k] &&
+                        hoodCells[5] == this.states[k]) {
                         this.cells[i][j].show("up-down")
                         break
-                } else if (hoodCells[1] == states[k] &&
-                        hoodCells[3] != states[k] &&
-                        hoodCells[4] == states[k] &&
-                        hoodCells[5] != states[k] &&
-                        hoodCells[7] != states[k]) {
+                } else if (hoodCells[1] == this.states[k] &&
+                        hoodCells[3] != this.states[k] &&
+                        hoodCells[4] == this.states[k] &&
+                        hoodCells[5] != this.states[k] &&
+                        hoodCells[7] != this.states[k]) {
                         this.cells[i][j].show("left")
                         break
-                } else if (hoodCells[1] != states[k] &&
-                        hoodCells[3] != states[k] &&
-                        hoodCells[4] == states[k] && 
-                        hoodCells[5] != states[k] &&
-                        hoodCells[7] == states[k]) {
+                } else if (hoodCells[1] != this.states[k] &&
+                        hoodCells[3] != this.states[k] &&
+                        hoodCells[4] == this.states[k] && 
+                        hoodCells[5] != this.states[k] &&
+                        hoodCells[7] == this.states[k]) {
                         this.cells[i][j].show("right")
                         break
-                } else if (hoodCells[1] != states[k] &&
-                        hoodCells[3] != states[k] &&
-                        hoodCells[4] == states[k] &&
-                        hoodCells[5] == states[k] &&
-                        hoodCells[7] != states[k]) {
+                } else if (hoodCells[1] != this.states[k] &&
+                        hoodCells[3] != this.states[k] &&
+                        hoodCells[4] == this.states[k] &&
+                        hoodCells[5] == this.states[k] &&
+                        hoodCells[7] != this.states[k]) {
                         this.cells[i][j].show("up")
                         break
-                    } else if (hoodCells[1] != states[k] &&
-                        hoodCells[3] == states[k] &&
-                        hoodCells[4] == states[k] &&
-                        hoodCells[5] != states[k] &&
-                        hoodCells[7] != states[k]) {
+                    } else if (hoodCells[1] != this.states[k] &&
+                        hoodCells[3] == this.states[k] &&
+                        hoodCells[4] == this.states[k] &&
+                        hoodCells[5] != this.states[k] &&
+                        hoodCells[7] != this.states[k]) {
                         this.cells[i][j].show("down")
                         break
-                } else if (hoodCells[1] != states[k] &&
-                        hoodCells[3] != states[k] &&
-                        hoodCells[4] == states[k] &&
-                        hoodCells[5] == states[k] &&
-                        hoodCells[7] == states[k]) {
+                } else if (hoodCells[1] != this.states[k] &&
+                        hoodCells[3] != this.states[k] &&
+                        hoodCells[4] == this.states[k] &&
+                        hoodCells[5] == this.states[k] &&
+                        hoodCells[7] == this.states[k]) {
                         this.cells[i][j].show("down-right")
                         break
-                } else if (hoodCells[1] != states[k] &&
-                        hoodCells[3] == states[k] &&
-                        hoodCells[4] == states[k] &&
-                        hoodCells[5] != states[k] &&
-                        hoodCells[7] == states[k]) {
+                } else if (hoodCells[1] != this.states[k] &&
+                        hoodCells[3] == this.states[k] &&
+                        hoodCells[4] == this.states[k] &&
+                        hoodCells[5] != this.states[k] &&
+                        hoodCells[7] == this.states[k]) {
                         this.cells[i][j].show("up-right")
                         break
-                } else if (hoodCells[1] == states[k] &&
-                        hoodCells[3] != states[k] &&
-                        hoodCells[4] == states[k] &&
-                        hoodCells[5] == states[k] &&
-                        hoodCells[7] != states[k]) {
+                } else if (hoodCells[1] == this.states[k] &&
+                        hoodCells[3] != this.states[k] &&
+                        hoodCells[4] == this.states[k] &&
+                        hoodCells[5] == this.states[k] &&
+                        hoodCells[7] != this.states[k]) {
                         this.cells[i][j].show("down-left")
                         break
-                } else if (hoodCells[1] == states[k] &&
-                        hoodCells[3] == states[k] &&
-                        hoodCells[4] == states[k] &&
-                        hoodCells[5] != states[k] &&
-                        hoodCells[7] != states[k]) {
+                } else if (hoodCells[1] == this.states[k] &&
+                        hoodCells[3] == this.states[k] &&
+                        hoodCells[4] == this.states[k] &&
+                        hoodCells[5] != this.states[k] &&
+                        hoodCells[7] != this.states[k]) {
                         this.cells[i][j].show("up-left")
                     }
                 }
