@@ -14,6 +14,9 @@ function setup() {
   myCanvas = createCanvas(WIDTH, HEIGHT);
   voidCounter = createElement("h1","Number of void cells:")
   virusCounter = createElement("h1","Number of virus cells:")
+  
+  button = createButton("Toggle Smoothing")
+  button.mousePressed(toggleSmoothing)
   background(0,0,0);
   cb1 = initRandomBoard()
   cb2 = initBlankBoard()
@@ -212,7 +215,7 @@ function calcNextGen(oldBoard,newBoard) {
 }
 function draw() {
      //update the background to white
-     background(0)
+     background(VIRUS_COLOR)
      //Show the cells
      cb1.showCells()
      showCounter()
@@ -234,37 +237,4 @@ function showCounter() {
      //Update HTML element that displays the number of virus cells and the number of void cells
     voidCounter.html("Void cells: " + cb1.stateCount[0])
     virusCounter.html("Virus cells: " + cb1.stateCount[1])
-}
-function keyPressed() {
-  //key code is space
-  if (keyCode === 32) {
-    if (going == true) {
-    going = false
-    } else {
-      going = true
-    }
-  }
-
-  if (keyCode === 39) {
-     background(255)
-     cb1.showCells()
-     //Switch the data between the boards ...cb2 is the junk board, cb1 is the only thing that get's shown here...
-     cb1,cb2 = calcNextGen(cb1,cb2)
-    
-  }
-  //If the user presses the up arrow, increase the pen size
-  if (keyCode === 38) {
-    p.size += 1
-  //If the user presses the down arrow, decrease the pen size
-  } else if (keyCode === 40) {
-    p.size -= 1
-  }
-  if (keyCode === 83) {
-    if (p.mode == "create-void") {
-    p.mode = "create-virus"
-    } else {
-      p.mode = "create-void"
-    }
-  }
-  
 }
