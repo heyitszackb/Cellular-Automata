@@ -35,73 +35,77 @@ class CellBoard {
             
             //Loop through all the states and display the cells based on the states/
             //This code ensures that only the same states code will "Connect" with itself visually.
-            for (let k = 0;k < states.length;k++) {
-              if (hoodCells[1] == states[k] &&
-                       hoodCells[4] == states[k] &&
-                       hoodCells[7] == states[k]) {
-                       this.cells[i][j].show("left-right")
-                       break
-            } else if (hoodCells[3] == states[k] &&
-                       hoodCells[4] == states[k] &&
-                       hoodCells[5] == states[k]) {
-                       this.cells[i][j].show("up-down")
-                       break
-            } else if (hoodCells[1] == states[k] &&
-                       hoodCells[3] != states[k] &&
-                       hoodCells[4] == states[k] &&
-                       hoodCells[5] != states[k] &&
-                       hoodCells[7] != states[k]) {
-                       this.cells[i][j].show("left")
-                       break
-             } else if (hoodCells[1] != states[k] &&
-                       hoodCells[3] != states[k] &&
-                       hoodCells[4] == states[k] && 
-                       hoodCells[5] != states[k] &&
-                       hoodCells[7] == states[k]) {
-                       this.cells[i][j].show("right")
-                       break
-             } else if (hoodCells[1] != states[k] &&
-                       hoodCells[3] != states[k] &&
-                       hoodCells[4] == states[k] &&
-                       hoodCells[5] == states[k] &&
-                       hoodCells[7] != states[k]) {
-                       this.cells[i][j].show("up")
-                       break
+            if (SMOOTH_CELLS == true) {
+                for (let k = 0;k < states.length;k++) {
+                if (hoodCells[1] == states[k] &&
+                        hoodCells[4] == states[k] &&
+                        hoodCells[7] == states[k]) {
+                        this.cells[i][j].show("left-right")
+                        break
+                } else if (hoodCells[3] == states[k] &&
+                        hoodCells[4] == states[k] &&
+                        hoodCells[5] == states[k]) {
+                        this.cells[i][j].show("up-down")
+                        break
+                } else if (hoodCells[1] == states[k] &&
+                        hoodCells[3] != states[k] &&
+                        hoodCells[4] == states[k] &&
+                        hoodCells[5] != states[k] &&
+                        hoodCells[7] != states[k]) {
+                        this.cells[i][j].show("left")
+                        break
                 } else if (hoodCells[1] != states[k] &&
-                       hoodCells[3] == states[k] &&
-                       hoodCells[4] == states[k] &&
-                       hoodCells[5] != states[k] &&
-                       hoodCells[7] != states[k]) {
-                       this.cells[i][j].show("down")
-                       break
-            } else if (hoodCells[1] != states[k] &&
-                       hoodCells[3] != states[k] &&
-                       hoodCells[4] == states[k] &&
-                       hoodCells[5] == states[k] &&
-                       hoodCells[7] == states[k]) {
-                       this.cells[i][j].show("down-right")
-                       break
-            } else if (hoodCells[1] != states[k] &&
-                       hoodCells[3] == states[k] &&
-                       hoodCells[4] == states[k] &&
-                       hoodCells[5] != states[k] &&
-                       hoodCells[7] == states[k]) {
-                       this.cells[i][j].show("up-right")
-                       break
-            } else if (hoodCells[1] == states[k] &&
-                       hoodCells[3] != states[k] &&
-                       hoodCells[4] == states[k] &&
-                       hoodCells[5] == states[k] &&
-                       hoodCells[7] != states[k]) {
-                       this.cells[i][j].show("down-left")
-                       break
-            } else if (hoodCells[1] == states[k] &&
-                       hoodCells[3] == states[k] &&
-                       hoodCells[4] == states[k] &&
-                       hoodCells[5] != states[k] &&
-                       hoodCells[7] != states[k]) {
-                       this.cells[i][j].show("up-left")
-              }
+                        hoodCells[3] != states[k] &&
+                        hoodCells[4] == states[k] && 
+                        hoodCells[5] != states[k] &&
+                        hoodCells[7] == states[k]) {
+                        this.cells[i][j].show("right")
+                        break
+                } else if (hoodCells[1] != states[k] &&
+                        hoodCells[3] != states[k] &&
+                        hoodCells[4] == states[k] &&
+                        hoodCells[5] == states[k] &&
+                        hoodCells[7] != states[k]) {
+                        this.cells[i][j].show("up")
+                        break
+                    } else if (hoodCells[1] != states[k] &&
+                        hoodCells[3] == states[k] &&
+                        hoodCells[4] == states[k] &&
+                        hoodCells[5] != states[k] &&
+                        hoodCells[7] != states[k]) {
+                        this.cells[i][j].show("down")
+                        break
+                } else if (hoodCells[1] != states[k] &&
+                        hoodCells[3] != states[k] &&
+                        hoodCells[4] == states[k] &&
+                        hoodCells[5] == states[k] &&
+                        hoodCells[7] == states[k]) {
+                        this.cells[i][j].show("down-right")
+                        break
+                } else if (hoodCells[1] != states[k] &&
+                        hoodCells[3] == states[k] &&
+                        hoodCells[4] == states[k] &&
+                        hoodCells[5] != states[k] &&
+                        hoodCells[7] == states[k]) {
+                        this.cells[i][j].show("up-right")
+                        break
+                } else if (hoodCells[1] == states[k] &&
+                        hoodCells[3] != states[k] &&
+                        hoodCells[4] == states[k] &&
+                        hoodCells[5] == states[k] &&
+                        hoodCells[7] != states[k]) {
+                        this.cells[i][j].show("down-left")
+                        break
+                } else if (hoodCells[1] == states[k] &&
+                        hoodCells[3] == states[k] &&
+                        hoodCells[4] == states[k] &&
+                        hoodCells[5] != states[k] &&
+                        hoodCells[7] != states[k]) {
+                        this.cells[i][j].show("up-left")
+                    }
+                }
+            } else {
+                this.cells[i][j].show("left-right")
             }
         }
       }

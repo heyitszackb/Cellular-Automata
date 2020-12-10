@@ -1,13 +1,12 @@
-let WIDTH = 500
-let HEIGHT = 500
-let RES = 5
-let CELL_SIZE = (WIDTH/HEIGHT)*RES
+let WIDTH = 500 //Width of the display
+let HEIGHT = 500 //Height of the display
+let RES = 5 //Resolution of the pixels. The smaller this number is, the more pixels there will be.
+let CELL_SIZE = (WIDTH/HEIGHT)*RES //Calculated value based on window size and res.
 let COLS = WIDTH/RES
 let ROWS = HEIGHT/RES
 let going = false
-let VIRUS_COLOR = [100,255,255]
-
-//EDIT!!! If this works I am going to bed.
+let VIRUS_COLOR = [100,255,255] //Color of the virus
+let SMOOTH_CELLS = true // Setting this to false will improve framerate performance
 
 //Create a canvas where I will display the pen tool (will not update cells with color from pen tool, it will be overlayed)
 class Canvas {
