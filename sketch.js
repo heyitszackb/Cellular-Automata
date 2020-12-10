@@ -5,7 +5,7 @@ let CELL_SIZE = (WIDTH/HEIGHT)*RES //Calculated value based on window size and r
 let COLS = WIDTH/RES
 let ROWS = HEIGHT/RES
 let going = false
-let VIRUS_COLOR = [100,255,255] //Color of the virus
+let bg_color = [100,255,255] //Color of the virus
 let SMOOTH_CELLS = false // Setting this to false will improve framerate performance
 
 function setup() {  
@@ -14,7 +14,8 @@ function setup() {
   myCanvas = createCanvas(WIDTH, HEIGHT);
   voidCounter = createElement("h1","Number of void cells:")
   virusCounter = createElement("h1","Number of virus cells:")
-  
+  slider = createSlider(0,255,250)
+  createP("")
   button = createButton("Toggle Smoothing")
   button.mousePressed(toggleSmoothing)
   background(0,0,0);
@@ -148,74 +149,10 @@ function initBlankBoard() {
   return cb
 }
 
-function calcNextGen(oldBoard,newBoard) {
-  //Loop through all the rows
-  for (let i = 0; i < ROWS; i++) {
-      //Loop through all the columns
-      for (let j = 0; j < COLS;j++) {
-      //Make a variable "Hoods" to store the neighbooring cell's value's
-      let hoods = []
-         //These two FOR loops loop though the 9 cells around and adjacent to the one we are looking at
-         //We want to remove the cell that we are from the total tally later.
-         for (let x = -1; x < 2; x++) {
-            for (let y = -1;y < 2; y++) {
-                 //Add to the array
-                 //WRAP AROUND BOARD CODE
-                let checkRow = (i + x + ROWS) % ROWS
-                let checkCol = (j + y + COLS) % COLS
-                
-                //console.log("checkRow",checkRow,"checkCol",checkCol)
-                hoods.push(oldBoard.cells[checkRow][checkCol].state)
-            }
-         }
-      //Initialize variables to count the array we just calculated
-      let virus = 0
-      let vd = 0
-      //Loop though the hoods array and tally the total blacks and total whites
-      for (let z = 0; z < 9; z++) {
-        if (hoods[z] == "virus") {
-          virus += 1
-        } else if (hoods[z] == "void"){
-          vd += 1
-           }
-        
-        }
-      //Remove yourself from the total tally
-      if (oldBoard.cells[i][j].state == "void") {
-        vd -= 1
-      } else if (oldBoard.cells[i][j].state == "virus ") {
-        virus -= 1
-        } 
-        //ACTUAL RULESET CODE HERE
-        
-      //ZACK GEN 1
-      ///*
-      if (oldBoard.cells[i][j].state == "virus" && vd == 3) {
-        newBoard.cells[i][j].state = "void"
-        } else if (oldBoard.cells[i][j].state == "void" && (vd < 2 || vd > 3)) {
-          newBoard.cells[i][j].state = "virus"
-        } else {
-          newBoard.cells[i][j].state = oldBoard.cells[i][j].state
-        }
-        //*/
-        
-        //ZACK GEN 2
-        /*
-        if (oldBoard.cells[i][j].state == "void" && virus == 3) {
-        newBoard.cells[i][j].state = "virus"
-        } else if (oldBoard.cells[i][j].state == "virus" && (virus < 2 || virus > 3)) {
-          newBoard.cells[i][j].state = "void"
-        } else {
-          newBoard.cells[i][j].state = oldBoard.cells[i][j].state
-        }
-        */
-      }
-  }
-  return newBoard,oldBoard
-}
 function draw() {
      //update the background to white
-     background(VIRUS_COLOR)
+     bg_color = slider.value()
+     background(bg_color)
      //Show the cells
      cb1.showCells()
      showCounter()
@@ -235,6 +172,6 @@ function draw() {
 function showCounter() {
     cb1.updateStateCount()
      //Update HTML element that displays the number of virus cells and the number of void cells
-    voidCounter.html("Void cells: " + cb1.stateCount[0])
-    virusCounter.html("Virus cells: " + cb1.stateCount[1])
+    voidCounter.html("Void cells: " + cb1.stateCount[1])
+    virusCounter.html("Virus cells: " + cb1.stateCount[0])
 }

@@ -168,10 +168,10 @@ class CellBoard {
       //If the state is 
       if (this.state == "virus") { 
           //Void cells are black
-          this.color = VIRUS_COLOR
-        } else {
+          this.color = [200,100,100]
+    } else {
           //Virus cells are stored in the variable VIRUS_COLOR
-          this.color = [0,0,0]
+          this.color = [0,0,0,0]
         } 
       //Fill with specified color based on state (Virus or Void)
       fill(this.color)
