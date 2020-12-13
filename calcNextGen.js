@@ -44,25 +44,37 @@ function calcNextGen(oldBoard,newBoard) {
           //ACTUAL RULESET CODE HERE
           
         //ZACK GEN 1
-        /*
-        if (oldBoard.cells[i][j].state != "virus" && virus >= 3) {
-          num = random(0,100)
-          if (num < 50) {
-              newBoard.cells[i][j].state = "virus"
-          }
-        } else {
-            newBoard.cells[i][j].state = oldBoard.cells[i][j].state
-          }
-          */
         ///*
+        num1 = random(0,100)
+        if (num1 < 50) {
+          if ((oldBoard.cells[i][j].state == "void" || oldBoard.cells[i][j].state == "covid-19")  && pox  >= 3) {
+            num = random(0,100)
+            if (num < 50) {
+                newBoard.cells[i][j].state = "pox"
+            }
+          } else {
+              newBoard.cells[i][j].state = oldBoard.cells[i][j].state
+            }
+      } else {
+          if ((oldBoard.cells[i][j].state == "void" || oldBoard.cells[i][j].state == "pox")  && covid  >= 3) {
+            num = random(0,100)
+            if (num < 50) {
+                newBoard.cells[i][j].state = "covid-19"
+            }
+          } else {
+              newBoard.cells[i][j].state = oldBoard.cells[i][j].state
+            }
+        }
+         // */
+        /*
         if (oldBoard.cells[i][j].state == "covid-19" && vd == 3) {
           newBoard.cells[i][j].state = "void"
-          } else if (oldBoard.cells[i][j].state == "void" && (vd < 2 || vd > 3 || vd == 7)) {
+          } else if (oldBoard.cells[i][j].state == "void" && (vd < 2 || vd > 3)) {
             newBoard.cells[i][j].state = "covid-19"
           } else {
             newBoard.cells[i][j].state = oldBoard.cells[i][j].state
           }
-          //*///
+          */
           
           //ZACK GEN 2
           /*
