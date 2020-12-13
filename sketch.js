@@ -14,6 +14,7 @@ function setup() {
   myCanvas = createCanvas(WIDTH, HEIGHT);
   voidCounter = createElement("h1","Number of void cells:")
   virusCounter = createElement("h1","Number of covid-19 cells:")
+  poxCounter = createElement("h1","Number of pox cells:")
   slider = createSlider(0,255,250)
   createP("")
   button = createButton("Toggle Smoothing")
@@ -23,7 +24,7 @@ function setup() {
   cb2 = initBlankBoard()
   c = new Canvas()
   c.createBlankCanvas()
-  p = new Pen(cb1.cells,c.pixels,[100,255,100,75],10,"create-void")
+  p = new Pen(cb1.cells,c.pixels,10,"create-void")
 }
 //Create a canvas where I will display the pen tool (will not update cells with color from pen tool, it will be overlayed)
 class Canvas {
@@ -56,12 +57,13 @@ class Canvas {
 //The pen tool! This combines the cells class AND the pixels class, it's the common deniminator for communicating
 //Information that pertains to both. The pixels array and the cells array's match up exactly over each other.
 class Pen {
-  constructor(cells,pixels,color1,size,mode) {
+  constructor(cells,pixels,size,mode) {
     this.cells = cells
     this.pixels = pixels
     this.size = size
-    this.color1 = color1
+    this.color1 = [255,255,255,75]
     this.color2 = [255,100,100,75]
+    this.color3 = [100,255,100,75]
     //The mode is something that will be expanded later. Currently, it only has two modes: create-void, and create-virus.
     //Create void, the default, will act like an eraser tool. Create virus will create that virus.
     this.mode = "create-void"
@@ -81,6 +83,8 @@ class Pen {
             //Else, set the color to color2 (we use a hotkey to switch between modes in the future)
           } else if (this.mode == "create-covid-19") {
           this.pixels[i][j].color = this.color2
+          } else if (this.mode == "create-pox") {
+            this.pixels[i][j].color = this.color3
           }
           //Regardless of what the color is, show the pen (taking pixels from the pixels array, NOT the cells array. Rememebr they are
           //two different arrays on purpose.)
@@ -106,10 +110,11 @@ class Pen {
         //To VOID. 
         if (d < this.pixels[i][j].size*this.size && mouseIsPressed){
           if (this.mode == "create-void") {
-          this.cells[i][j].state = "void"
-            //Otherwise, set it to virus.
-          } else {
-          this.cells[i][j].state = "covid-19"
+              this.cells[i][j].state = "void"
+          } else if (this.mode == "create-covid-19"){
+              this.cells[i][j].state = "covid-19"
+          } else if (this.mode == "create-pox") {
+              this.cells[i][j].state = "pox"
           }
         }
         
@@ -172,6 +177,7 @@ function draw() {
 function showCounter() {
     cb1.updateStateCount()
      //Update HTML element that displays the number of virus cells and the number of void cells
+    poxCounter.html("Pox cells: " + cb1.stateCount[2])
     voidCounter.html("Void cells: " + cb1.stateCount[1])
-    virusCounter.html("covid-19 cells: " + cb1.stateCount[0])
+    virusCounter.html("Covid-19 cells: " + cb1.stateCount[0])
 }

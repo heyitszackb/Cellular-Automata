@@ -20,6 +20,7 @@ function calcNextGen(oldBoard,newBoard) {
            }
         //Initialize variables to count the array we just calculated
         let covid = 0
+        let pox = 0
         let vd = 0
         //Loop though the hoods array and tally the total blacks and total whites
         for (let z = 0; z < 9; z++) {
@@ -27,7 +28,9 @@ function calcNextGen(oldBoard,newBoard) {
             covid += 1
           } else if (hoods[z] == "void"){
             vd += 1
-             }
+          } else if (hoods[z] == "pox"){
+              pox += 1
+               }
           
           }
         //Remove yourself from the total tally
@@ -35,7 +38,9 @@ function calcNextGen(oldBoard,newBoard) {
           vd -= 1
         } else if (oldBoard.cells[i][j].state == "covid-19") {
           covid -= 1
-          } 
+        } else if (oldBoard.cells[i][j].state == "pox") {
+            pox -= 1
+        } 
           //ACTUAL RULESET CODE HERE
           
         //ZACK GEN 1

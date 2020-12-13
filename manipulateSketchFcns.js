@@ -25,7 +25,9 @@ function keyPressed() {
     if (keyCode === 83) {
       if (p.mode == "create-void") {
       p.mode = "create-covid-19"
-      } else {
+      } else if (p.mode == "create-covid-19"){
+        p.mode = "create-pox"
+      } else if (p.mode == "create-pox") {
         p.mode = "create-void"
       }
     }

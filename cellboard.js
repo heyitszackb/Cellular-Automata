@@ -1,7 +1,7 @@
 class CellBoard {
     constructor() {
       this.cells = []
-      this.states = ["covid-19","void"]
+      this.states = ["covid-19","void","pox"]
       this.stateCount = []
     }
     updateStateCount() {
@@ -131,7 +131,7 @@ class CellBoard {
         for (let i = 0; i < ROWS; i++) {
         let row = []
             for (let j = 0; j < COLS; j++) {
-               let state = random(["void","covid-19"])
+               let state = random(["void","covid-19","pox"])
                let c = new Cell(CELL_SIZE*i,CELL_SIZE*j,CELL_SIZE,state)
                row.push(c)
         }
@@ -169,10 +169,12 @@ class CellBoard {
       if (this.state == "covid-19") { 
           //Void cells are black
           this.color = [200,100,100]
-    } else {
+    } else if (this.state == "void") {
           //Virus cells are stored in the variable VIRUS_COLOR
           this.color = [0,0,0,0]
-        } 
+    } else if (this.state == "pox") {
+      this.color = [100,200,100]
+    }
       //Fill with specified color based on state (Virus or Void)
       fill(this.color)
       //Check the position in relation to the other cells around the current one and draw appropriately
