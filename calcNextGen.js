@@ -24,21 +24,21 @@ function calcNextGen(oldBoard,newBoard) {
         let vd = 0
         //Loop though the hoods array and tally the total blacks and total whites
         for (let z = 0; z < 9; z++) {
-          if (hoods[z] == "covid-19") {
+          if (hoods[z] == newBoard.states[0]) {
             covid += 1
-          } else if (hoods[z] == "void"){
+          } else if (hoods[z] == newBoard.states[1]){
             vd += 1
-          } else if (hoods[z] == "pox"){
+          } else if (hoods[z] == newBoard.states[2]){
               pox += 1
                }
           
           }
         //Remove yourself from the total tally
-        if (oldBoard.cells[i][j].state == "void") {
+        if (oldBoard.cells[i][j].state.name == "void") {
           vd -= 1
-        } else if (oldBoard.cells[i][j].state == "covid-19") {
+        } else if (oldBoard.cells[i][j].state.name == "covid-19") {
           covid -= 1
-        } else if (oldBoard.cells[i][j].state == "pox") {
+        } else if (oldBoard.cells[i][j].state.name == "pox") {
             pox -= 1
         } 
           //ACTUAL RULESET CODE HERE
@@ -47,19 +47,19 @@ function calcNextGen(oldBoard,newBoard) {
         ///*
         num1 = random(0,100)
         if (num1 < 50) {
-          if ((oldBoard.cells[i][j].state == "void" || oldBoard.cells[i][j].state == "covid-19")  && pox  >= 3) {
+          if ((oldBoard.cells[i][j].state.name == "void" || oldBoard.cells[i][j].state.name == "covid-19")  && pox  >= 3) {
             num = random(0,100)
             if (num < 50) {
-                newBoard.cells[i][j].state = "pox"
+                newBoard.cells[i][j].state = newBoard.states[2] //Pox
             }
           } else {
               newBoard.cells[i][j].state = oldBoard.cells[i][j].state
             }
       } else {
-          if ((oldBoard.cells[i][j].state == "void" || oldBoard.cells[i][j].state == "pox")  && covid  >= 3) {
+          if ((oldBoard.cells[i][j].state.name == "void" || oldBoard.cells[i][j].state.name == "pox")  && covid  >= 3) {
             num = random(0,100)
             if (num < 50) {
-                newBoard.cells[i][j].state = "covid-19"
+                newBoard.cells[i][j].state = newBoard.states[0] //Covid-19
             }
           } else {
               newBoard.cells[i][j].state = oldBoard.cells[i][j].state

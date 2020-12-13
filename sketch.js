@@ -22,9 +22,10 @@ function setup() {
   background(0,0,0);
   cb1 = initRandomBoard()
   cb2 = initBlankBoard()
+  //cb2.loadStates()
   c = new Canvas()
   c.createBlankCanvas()
-  p = new Pen(cb1.cells,c.pixels,10,"create-void")
+  p = new Pen(cb1,c.pixels,10,"create-void")
 }
 //Create a canvas where I will display the pen tool (will not update cells with color from pen tool, it will be overlayed)
 class Canvas {
@@ -57,8 +58,8 @@ class Canvas {
 //The pen tool! This combines the cells class AND the pixels class, it's the common deniminator for communicating
 //Information that pertains to both. The pixels array and the cells array's match up exactly over each other.
 class Pen {
-  constructor(cells,pixels,size,mode) {
-    this.cells = cells
+  constructor(cellBoard,pixels,size,mode) {
+    this.cellBoard = cellBoard
     this.pixels = pixels
     this.size = size
     this.color1 = [255,255,255,75]
@@ -85,10 +86,9 @@ class Pen {
           this.pixels[i][j].color = this.color2
           } else if (this.mode == "create-pox") {
             this.pixels[i][j].color = this.color3
-          }
           //Regardless of what the color is, show the pen (taking pixels from the pixels array, NOT the cells array. Rememebr they are
           //two different arrays on purpose.)
-          
+          }
           this.pixels[i][j].show()  
         } else {
           //If the pixels are not in the proper distance of the mouse, then essentailly make them dissapear (alpha set to 0)
@@ -110,11 +110,11 @@ class Pen {
         //To VOID. 
         if (d < this.pixels[i][j].size*this.size && mouseIsPressed){
           if (this.mode == "create-void") {
-              this.cells[i][j].state = "void"
+              this.cellBoard.cells[i][j].state = this.cellBoard.states[1]
           } else if (this.mode == "create-covid-19"){
-              this.cells[i][j].state = "covid-19"
+              this.cellBoard.cells[i][j].state = this.cellBoard.states[0]
           } else if (this.mode == "create-pox") {
-              this.cells[i][j].state = "pox"
+              this.cellBoard.cells[i][j].state = this.cellBoard.states[2]
           }
         }
         
@@ -142,6 +142,7 @@ class Pixel {
 //Initialize Random Board State
 function initRandomBoard() {
   let cb = new CellBoard()
+  cb.loadStates()
   cb.createRandomCells()
   return cb
 }
@@ -150,6 +151,7 @@ function initRandomBoard() {
 //Initialize Blank Board State
 function initBlankBoard() {
   let cb = new CellBoard()
+  cb.loadStates()
   cb.createBlankCells()
   return cb
 }

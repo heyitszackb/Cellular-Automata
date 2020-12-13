@@ -1,8 +1,30 @@
 class CellBoard {
     constructor() {
       this.cells = []
-      this.states = ["covid-19","void","pox"]
+      this.states = []
       this.stateCount = []
+      //Try this out and see if I can implement nested classes with states and state colors.
+
+      //this.state = new State("void",[255,255,255])
+    }
+    loadStates() {
+      class State {
+        constructor(name, color) {
+          this.name = name
+          this.color = color
+        }
+      }
+      
+      let state0 = new State("covid-19",[200,100,100])
+      let state1 = new State("void",[0,0,0,0])
+      let state2 = new State("pox",[100,200,100])
+      let state3 = new State("flu",[100,100,200])
+      console.log(state0.name)
+      this.states.push(state0)
+      this.states.push(state1)
+      this.states.push(state2)
+      
+     console.log("hello")
     }
     updateStateCount() {
         this.stateCount = []
@@ -10,7 +32,7 @@ class CellBoard {
             let count = 0
             for (let i = 0;i < ROWS;i++) {
                 for (let j = 0;j < COLS;j++) {
-                    if (this.cells[i][j].state == this.states[h]) {
+                    if (this.cells[i][j].state.name == this.states[h].name) {
                         //console.log(this.states[i])
                         count += 1
                     }
@@ -131,8 +153,14 @@ class CellBoard {
         for (let i = 0; i < ROWS; i++) {
         let row = []
             for (let j = 0; j < COLS; j++) {
-               let state = random(["void","covid-19","pox"])
-               let c = new Cell(CELL_SIZE*i,CELL_SIZE*j,CELL_SIZE,state)
+               let num = floor(random(this.states.length))
+               let thestate = this.states[num]
+               if (thestate.name != "void" && thestate.name != "covid-19" && thestate.name != "pox") {
+                console.log("hello")
+                console.log(thestate)
+              }
+               //let state = random(["void","covid-19","pox"])
+               let c = new Cell(CELL_SIZE*i,CELL_SIZE*j,CELL_SIZE,thestate)
                row.push(c)
         }
         this.cells.push(row)
@@ -143,7 +171,8 @@ class CellBoard {
         for (let i = 0; i < ROWS; i++) {
             let row = []
             for (let j = 0; j < COLS; j++) {
-                let c = new Cell(CELL_SIZE*i,CELL_SIZE*j,CELL_SIZE,"void")
+              let state = this.states[1]
+                let c = new Cell(CELL_SIZE*i,CELL_SIZE*j,CELL_SIZE,state)
                 row.push(c)
         }
         this.cells.push(row)
@@ -159,24 +188,17 @@ class CellBoard {
       this.x = x
       this.y = y
       this.size = size
-      this.color = 0
       this.state = state
     }
     show(pos) {
       //Eliminate the lines from the outside of the shapes
       noStroke()
-      //If the state is 
-      if (this.state == "covid-19") { 
-          //Void cells are black
-          this.color = [200,100,100]
-    } else if (this.state == "void") {
-          //Virus cells are stored in the variable VIRUS_COLOR
-          this.color = [0,0,0,0]
-    } else if (this.state == "pox") {
-      this.color = [100,200,100]
-    }
       //Fill with specified color based on state (Virus or Void)
-      fill(this.color)
+      if (this.state.name != "void" && this.state.name != "covid-19" && this.state.name != "pox") {
+        //console.log("hello")
+        //console.log(this.state)
+      }
+      fill(this.state.color)
       //Check the position in relation to the other cells around the current one and draw appropriately
       if (pos == "left-right" || pos == "up-down") {
         rect(this.x,this.y,this.size,this.size)
