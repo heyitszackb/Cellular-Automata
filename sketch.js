@@ -13,7 +13,7 @@ function setup() {
   // Create Canvas of given size  
   myCanvas = createCanvas(WIDTH, HEIGHT);
   voidCounter = createElement("h1","Number of void cells:")
-  virusCounter = createElement("h1","Number of virus cells:")
+  virusCounter = createElement("h1","Number of covid-19 cells:")
   slider = createSlider(0,255,250)
   createP("")
   button = createButton("Toggle Smoothing")
@@ -79,7 +79,7 @@ class Pen {
           if (this.mode == "create-void") {
           this.pixels[i][j].color = this.color1
             //Else, set the color to color2 (we use a hotkey to switch between modes in the future)
-          } else if (this.mode == "create-virus") {
+          } else if (this.mode == "create-covid-19") {
           this.pixels[i][j].color = this.color2
           }
           //Regardless of what the color is, show the pen (taking pixels from the pixels array, NOT the cells array. Rememebr they are
@@ -109,7 +109,7 @@ class Pen {
           this.cells[i][j].state = "void"
             //Otherwise, set it to virus.
           } else {
-          this.cells[i][j].state = "virus"
+          this.cells[i][j].state = "covid-19"
           }
         }
         
@@ -173,5 +173,5 @@ function showCounter() {
     cb1.updateStateCount()
      //Update HTML element that displays the number of virus cells and the number of void cells
     voidCounter.html("Void cells: " + cb1.stateCount[1])
-    virusCounter.html("Virus cells: " + cb1.stateCount[0])
+    virusCounter.html("covid-19 cells: " + cb1.stateCount[0])
 }

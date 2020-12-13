@@ -1,7 +1,7 @@
 class CellBoard {
     constructor() {
       this.cells = []
-      this.states = ["virus","void"]
+      this.states = ["covid-19","void"]
       this.stateCount = []
     }
     updateStateCount() {
@@ -131,7 +131,7 @@ class CellBoard {
         for (let i = 0; i < ROWS; i++) {
         let row = []
             for (let j = 0; j < COLS; j++) {
-               let state = random(["void","virus"])
+               let state = random(["void","covid-19"])
                let c = new Cell(CELL_SIZE*i,CELL_SIZE*j,CELL_SIZE,state)
                row.push(c)
         }
@@ -166,7 +166,7 @@ class CellBoard {
       //Eliminate the lines from the outside of the shapes
       noStroke()
       //If the state is 
-      if (this.state == "virus") { 
+      if (this.state == "covid-19") { 
           //Void cells are black
           this.color = [200,100,100]
     } else {
