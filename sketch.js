@@ -25,7 +25,7 @@ function setup() {
   //cb2.loadStates()
   c = new Canvas()
   c.createBlankCanvas()
-  p = new Pen(cb1,c.pixels,10,"create-void")
+  p = new Pen(cb1,c.pixels,10,"void")
 }
 //Create a canvas where I will display the pen tool (will not update cells with color from pen tool, it will be overlayed)
 class Canvas {
@@ -62,12 +62,8 @@ class Pen {
     this.cellBoard = cellBoard
     this.pixels = pixels
     this.size = size
-    this.color1 = [255,255,255,75]
-    this.color2 = [255,100,100,75]
-    this.color3 = [100,255,100,75]
-    //The mode is something that will be expanded later. Currently, it only has two modes: create-void, and create-virus.
-    //Create void, the default, will act like an eraser tool. Create virus will create that virus.
-    this.mode = "create-void"
+    this.mode = "void" //The mode corresponds to the name of the state of the cell. Setting the mode to something will allow the
+    //pen tool to "paint" that state onto the cells below it.
   }
   show() {
     //Loop through all the rows and cols (since the cells and the pixels are exactly overlapping, you can reference the same cells in each)
@@ -77,44 +73,43 @@ class Pen {
       for (let j = 0;j < COLS;j++) {
         //Take the distance from the mouse to the pixel (uses top left, so sometimes the cirlces can be wonky but it's fineeee)
         let d = dist(mouseX,mouseY,this.pixels[i][j].x,this.pixels[i][j].y)
+        //If the pen size distance is over that pixel, display it with the appriopriate color that corresponds to the state of the cell
         if (d < this.pixels[i][j].size*this.size){
-          //If the mode is create-voide, then set the color to color1
-          if (this.mode == "create-void") {
-          this.pixels[i][j].color = this.color1
-            //Else, set the color to color2 (we use a hotkey to switch between modes in the future)
-          } else if (this.mode == "create-covid-19") {
-          this.pixels[i][j].color = this.color2
-          } else if (this.mode == "create-pox") {
-            this.pixels[i][j].color = this.color3
-          //Regardless of what the color is, show the pen (taking pixels from the pixels array, NOT the cells array. Rememebr they are
-          //two different arrays on purpose.)
+          let ran = false
+          //loop through all the states that exist in the cellboard and check to see if the pen mode is equal to that state name.
+          for (let k = 0; k < this.cellBoard.states.length; k++)
+          //If the pen mode is equal to the name of a state, set the pen color to the color that corrosponds to that state.
+            if (this.mode == this.cellBoard.states[k].name) {
+              this.pixels[i][j].color = this.cellBoard.states[k].color
+              this.pixels[i][j].show()
+              ran = true
+            }
+            //Set all the other pixels in the canvas to transparent when the mouse is not over them within the range of the pen.
+            if (ran == true){
+              this.pixels[i][j].color = [0,0,0,0]
+            }
           }
-          this.pixels[i][j].show()  
-        } else {
-          //If the pixels are not in the proper distance of the mouse, then essentailly make them dissapear (alpha set to 0)
-          //So at all times there is another layer of pixels across the screen, and moving the mouse reveals more of that layer.
-          this.pixels[i][j].color = [0,0,0,0]
-        }
         
+        }
       }
     }
-  }
+  
   //This is the method where the updating actually happens in the cells array.
   updateCells() {
     //Loop through the cells and pixels (they're the same just on top of each other)
     for (let i = 0;i < ROWS;i++) {
       for (let j = 0;j < COLS;j++) {
-        //Get the distance again
+        //Get the distance again from the mouse position
         let d = dist(mouseX,mouseY,this.pixels[i][j].x,this.pixels[i][j].y)
-        //If the mouse is pressed and the mode is create-void, then we want to set the STATE of the current CELL
-        //To VOID. 
+        //If the mouse is pressed and the individual pixel is within the distance of the current size of the pen
         if (d < this.pixels[i][j].size*this.size && mouseIsPressed){
-          if (this.mode == "create-void") {
-              this.cellBoard.cells[i][j].state = this.cellBoard.states[1]
-          } else if (this.mode == "create-covid-19"){
-              this.cellBoard.cells[i][j].state = this.cellBoard.states[0]
-          } else if (this.mode == "create-pox") {
-              this.cellBoard.cells[i][j].state = this.cellBoard.states[2]
+          //Loop through all the states in the cellboard.
+          for (let k = 0; k < this.cellBoard.states.length; k++) {
+            //If the mode of the pen is equal to the state name, 
+            if (this.mode == this.cellBoard.states[k].name) {
+              //set the state of the cellboard to that state.
+              this.cellBoard.cells[i][j].state = this.cellBoard.states[k]
+            }
           }
         }
         
@@ -122,6 +117,7 @@ class Pen {
     }
   }
 }
+
 
 //The building block of our pen tool. Each pixel is so simple and it makes something so much more complex.
 class Pixel {
@@ -159,7 +155,7 @@ function initBlankBoard() {
 function draw() {
      //update the background to white
      bg_color = slider.value()
-     background(bg_color)
+     //background(bg_color)
      //Show the cells
      cb1.showCells()
      showCounter()
