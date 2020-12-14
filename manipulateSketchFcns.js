@@ -7,7 +7,11 @@ function keyPressed() {
         going = true
       }
     }
-  
+    //R
+    if (keyCode == 82) {
+      cb1.createRandomCells()
+      cb2.createRandomCells()
+    }
     if (keyCode === 39) {
        background(255)
        cb1.showCells()

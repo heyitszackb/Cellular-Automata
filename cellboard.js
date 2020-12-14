@@ -150,15 +150,12 @@ class CellBoard {
     }
     //create a randomly generated cell block with random states.
     createRandomCells() {
+      this.cells = []
         for (let i = 0; i < ROWS; i++) {
         let row = []
             for (let j = 0; j < COLS; j++) {
                let num = floor(random(this.states.length))
                let thestate = this.states[num]
-               if (thestate.name != "void" && thestate.name != "covid-19" && thestate.name != "pox") {
-                console.log("hello")
-                console.log(thestate)
-              }
                //let state = random(["void","covid-19","pox"])
                let c = new Cell(CELL_SIZE*i,CELL_SIZE*j,CELL_SIZE,thestate)
                row.push(c)
@@ -194,10 +191,6 @@ class CellBoard {
       //Eliminate the lines from the outside of the shapes
       noStroke()
       //Fill with specified color based on state (Virus or Void)
-      if (this.state.name != "void" && this.state.name != "covid-19" && this.state.name != "pox") {
-        //console.log("hello")
-        //console.log(this.state)
-      }
       fill(this.state.color)
       //Check the position in relation to the other cells around the current one and draw appropriately
       if (pos == "left-right" || pos == "up-down") {
