@@ -12,9 +12,6 @@ function setup() {
      
   // Create Canvas of given size  
   myCanvas = createCanvas(WIDTH, HEIGHT);
-  voidCounter = createElement("h1","Number of void cells:")
-  virusCounter = createElement("h1","Number of covid-19 cells:")
-  poxCounter = createElement("h1","Number of pox cells:")
   slider = createSlider(0,255,250)
   createP("")
   button = createButton("Toggle Smoothing")
@@ -22,6 +19,7 @@ function setup() {
   background(0,0,0);
   cb1 = initRandomBoard()
   cb2 = initBlankBoard()
+  htmlCounters = initCounters()
   c = new Canvas()
   c.createBlankCanvas()
   p = new Pen(cb1,c.pixels,3,"void")
@@ -157,7 +155,7 @@ function draw() {
      //background(bg_color)
      //Show the cells
      cb1.showCells()
-     showCounter()
+     showCounter(htmlCounters)
      //show the canvas screen over the cells (the pen tool)
      p.show()
      //Update the cells
@@ -170,11 +168,26 @@ function draw() {
   }
 }
 
-//Handles displaying the count of the virus and void cells
-function showCounter() {
+//Handles displaying the count of the virus and void cells  
+function initCounters() {
+  htmlTags = []
+  for (let i = 0; i < cb1.states.length; i++) {
+    htmlCounter = createElement("h1",cb1.states[i].name + ": ")
+    htmlTags.push(htmlCounter)
+  }
+  return htmlTags
+}
+function showCounter(htmlCounters) {
     cb1.updateStateCount()
-     //Update HTML element that displays the number of virus cells and the number of void cells
-    poxCounter.html("Pox cells: " + cb1.stateCount[2])
-    voidCounter.html("Void cells: " + cb1.stateCount[1])
-    virusCounter.html("Covid-19 cells: " + cb1.stateCount[0])
+    for (let i = 0; i < htmlCounters.length; i++) {
+      htmlCounters[i].html(cb1.states[i].name + " cells: " + cb1.stateCount[i])
+    }
+    //Update HTML element that displays the number of virus cells and the number of void cells
+    //voidCounter = createElement("h1","Number of void cells:")
+    //virusCounter = createElement("h1","Number of covid-19 cells:")
+    //poxCounter = createElement("h1","Number of pox cells:")
+    //poxCounter.html("Pox cells: " + cb1.stateCount[2])
+    //voidCounter.html("Void cells: " + cb1.stateCount[1])
+    //virusCounter.html("Covid-19 cells: " + cb1.stateCount[0])
+
 }

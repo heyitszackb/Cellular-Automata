@@ -21,12 +21,14 @@ class CellBoard {
       let state3 = new State("flu",[100,100,200])
       let state4 = new State("sars",[200,100,200])
       let state5 = new State("sars2",[200,200,100])
+      let state6 = new State("sars3",[100,200,200])
       this.states.push(state0)
       this.states.push(state1)
       this.states.push(state2)
       this.states.push(state3)
       this.states.push(state4)
       this.states.push(state5)
+      this.states.push(state6)
      console.log("hello")
     }
     updateStateCount() {
