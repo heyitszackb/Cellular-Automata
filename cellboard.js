@@ -15,15 +15,18 @@ class CellBoard {
         }
       }
       
-      let state0 = new State("covid-19",[200,100,100])
-      let state1 = new State("void",[255,255,255])
+      let state0 = new State("void",[255,255,255])
+      let state1 = new State("covid-19",[200,100,100])
       let state2 = new State("pox",[100,200,100])
       let state3 = new State("flu",[100,100,200])
-      console.log(state0.name)
+      let state4 = new State("sars",[200,100,200])
+      let state5 = new State("sars2",[200,200,100])
       this.states.push(state0)
       this.states.push(state1)
       this.states.push(state2)
-      
+      this.states.push(state3)
+      this.states.push(state4)
+      this.states.push(state5)
      console.log("hello")
     }
     updateStateCount() {

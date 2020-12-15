@@ -22,10 +22,9 @@ function setup() {
   background(0,0,0);
   cb1 = initRandomBoard()
   cb2 = initBlankBoard()
-  //cb2.loadStates()
   c = new Canvas()
   c.createBlankCanvas()
-  p = new Pen(cb1,c.pixels,10,"void")
+  p = new Pen(cb1,c.pixels,3,"void")
 }
 //Create a canvas where I will display the pen tool (will not update cells with color from pen tool, it will be overlayed)
 class Canvas {

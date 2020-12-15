@@ -13,58 +13,80 @@ function calcNextGen(oldBoard,newBoard) {
                    //WRAP AROUND BOARD CODE
                   let checkRow = (i + x + ROWS) % ROWS
                   let checkCol = (j + y + COLS) % COLS
-                  
-                  //console.log("checkRow",checkRow,"checkCol",checkCol)
                   hoods.push(oldBoard.cells[checkRow][checkCol].state)
               }
            }
-        //Initialize variables to count the array we just calculated
-        let covid = 0
-        let pox = 0
-        let vd = 0
-        //Loop though the hoods array and tally the total blacks and total whites
-        for (let z = 0; z < 9; z++) {
-          if (hoods[z] == newBoard.states[0]) {
-            covid += 1
-          } else if (hoods[z] == newBoard.states[1]){
-            vd += 1
-          } else if (hoods[z] == newBoard.states[2]){
-              pox += 1
-               }
-          
+
+        let sortedHoods = []
+        //Loop through all the states
+        for (let k = 0; k < oldBoard.states.length; k++) {
+          //Initialize a blank placeholder variable
+          stateList = []
+          //Loop through all of the items in the hoods array
+          for (let l = 0; l < hoods.length; l++) {
+            //If the item equals the current state,
+            if (hoods[l] == oldBoard.states[k]) {
+              //Add that state to the placeholder array
+              stateList.push(hoods[l])
+            }
+            //Add the placeholder array to the sortedHoods variable
           }
-        //Remove yourself from the total tally
-        if (oldBoard.cells[i][j].state.name == "void") {
-          vd -= 1
-        } else if (oldBoard.cells[i][j].state.name == "covid-19") {
-          covid -= 1
-        } else if (oldBoard.cells[i][j].state.name == "pox") {
-            pox -= 1
-        } 
-          //ACTUAL RULESET CODE HERE
-          
+          sortedHoods.push(stateList)
+        }
+        //Loop through all the states in the oldBoard
+        for (let m = 0; m < oldBoard.states.length; m++) {
+          //If the state matches the current state,
+          if (oldBoard.cells[i][j].state == oldBoard.states[m]) {
+            //Remove the state from the sortedHoods array
+            sortedHoods[m].splice(oldBoard.states[m],1)
+          } 
+        }
+           
+           
         //ZACK GEN 1
         ///*
-        num1 = random(0,100)
-        if (num1 < 50) {
-          if ((oldBoard.cells[i][j].state.name == "void" || oldBoard.cells[i][j].state.name == "covid-19")  && pox  >= 3) {
-            num = random(0,100)
-            if (num < 50) {
-                newBoard.cells[i][j].state = newBoard.states[2] //Pox
-            }
-          } else {
-              newBoard.cells[i][j].state = oldBoard.cells[i][j].state
-            }
-      } else {
-          if ((oldBoard.cells[i][j].state.name == "void" || oldBoard.cells[i][j].state.name == "pox")  && covid  >= 3) {
-            num = random(0,100)
-            if (num < 50) {
-                newBoard.cells[i][j].state = newBoard.states[0] //Covid-19
-            }
-          } else {
-              newBoard.cells[i][j].state = oldBoard.cells[i][j].state
-            }
+
+        /*
+        Covid-19 = 0
+        Void     = 1
+        pox      = 2
+        */
+       //Make a blank list that will later hold the indexes of the viruses we want to check for in the calc code below.
+      numsList = []
+      //Random number function
+      get_random = function (list) {
+        return list[Math.floor((Math.random()*list.length))]
+      }
+      //If the current cell is next to another virus, add that virus index to the numsList array
+      for (let w = 1; w < sortedHoods.length; w++) {
+        if (sortedHoods[w].length != 0) {
+          numsList.push(w)
         }
+      }
+      //Get a random index from the numsList array, so that the viruses are balanced.
+      myNum = get_random(numsList)
+      //console.log(i,j,myNum,numsList)
+//*/
+      
+      //console.log(i,j,numsList)
+     
+      //If the numsList is not Null (if the nums list is Null, it means it's in the middle of a field of void cells),
+      if (numsList.length > 0) {
+        //Check to see if any of the OTHER viruses are around it AND that there are at least X (3 now) of it's own kind near it.
+       if ((oldBoard.cells[i][j].state != oldBoard.states[myNum]) && sortedHoods[myNum].length  >= 3) {
+        //Get a random number between 0 and 100
+        num = random(0,100)
+        //If the number is less than 50,
+        if (num < 60) {
+          //Set the state to the state that you are currently
+            newBoard.cells[i][j].state = newBoard.states[myNum]
+        }
+      } else {
+        //Otherwise, set the state to the state that the cell was before
+          newBoard.cells[i][j].state = oldBoard.cells[i][j].state
+        }
+      }
+        
          // */
         /*
         if (oldBoard.cells[i][j].state == "covid-19" && vd == 3) {
