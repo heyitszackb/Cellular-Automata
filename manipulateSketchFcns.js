@@ -1,3 +1,4 @@
+let counter = 0
 function keyPressed() {
     //key code is space
     if (keyCode === 32) {
@@ -26,7 +27,15 @@ function keyPressed() {
     } else if (keyCode === 40) {
       p.size -= 1
     }
+
     if (keyCode === 83) {
+      if (counter < cb1.states.length - 1) {
+        counter += 1
+      } else {
+        counter = 0
+      }
+      p.mode = cb1.states[counter].name
+      /*
       if (p.mode == "void") {
       p.mode = "covid-19"
       } else if (p.mode == "covid-19"){
@@ -34,6 +43,7 @@ function keyPressed() {
       } else if (p.mode == "pox") {
         p.mode = "void"
       }
+      */
     }
     
   }

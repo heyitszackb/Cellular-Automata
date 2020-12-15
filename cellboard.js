@@ -14,21 +14,21 @@ class CellBoard {
           this.color = color
         }
       }
-      
+      //state 0 will always be evaluated as the void state
       let state0 = new State("void",[255,255,255])
       let state1 = new State("covid-19",[200,100,100])
       let state2 = new State("pox",[100,200,100])
       let state3 = new State("flu",[100,100,200])
       let state4 = new State("sars",[200,100,200])
       let state5 = new State("sars2",[200,200,100])
-      let state6 = new State("sars3",[100,200,200])
+      //let state6 = new State("sars3",[100,200,200])
       this.states.push(state0)
       this.states.push(state1)
       this.states.push(state2)
       this.states.push(state3)
       this.states.push(state4)
       this.states.push(state5)
-      this.states.push(state6)
+      //this.states.push(state6)
      console.log("hello")
     }
     updateStateCount() {
